@@ -19,10 +19,10 @@ def count_word_in_string(string):
     return result
 
 #Bài 3. count word in files:
-def count_words_in_file(file):
+def count_words_in_file(file_path):
     result = {}
     try:
-        with open(file,'r') as file:
+        with open(file_path,'r') as file:
             for line in file:
                 list_words = line.lower().split()
                 for word in list_words:
@@ -36,9 +36,9 @@ def count_words_in_file(file):
     return  result
 
 #Bài 4:
-def levenshtein_distance(S, T):
-    m = len(S)
-    n = len(T)
+def levenshtein_distance(start, target):
+    m = len(start)
+    n = len(target)
     D = [[0]*(n+1) for _ in range(m+1)]
 
     for i in range(m+1):
@@ -48,7 +48,7 @@ def levenshtein_distance(S, T):
 
     for i in range(1,m+1):
         for j in range(1, n+1):
-            cost = 0 if S[i - 1] == T[j - 1] else 1
+            cost = 0 if start[i - 1] == target[j - 1] else 1
 
             D[i][j] = min(D[i - 1][j] + 1,
                           D[i][j - 1] + 1,
@@ -56,6 +56,13 @@ def levenshtein_distance(S, T):
 
     return D[m][n]
 
+def main():
+    print(max_in_slidingwin([1,3,-1,-3,5,3,6,7],3),'\n')
+    print(count_word_in_string('hello world'),'\n')
+    print(count_words_in_file('Module01/Week02/M01W02/P1_data.txt'),'\n')
+    print(levenshtein_distance('kitten','sitting'), 'is levenshtein distance between kitten and sitting')
 
-
+if __name__ == '__main__':
+    main()
+    
 
