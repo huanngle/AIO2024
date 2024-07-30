@@ -1,26 +1,30 @@
-#-- AIO433: Lê Ngọc Huân
+# -- AIO433: Lê Ngọc Huân
+import random
+import math
 import numpy as np
 
-#Bài 1. Tạo hàm evaluate_classification_model
-def evaluate_classification_model(TruePositive, FalsePositive, FalseNegative):
-    if not isinstance(TruePositive, int):
-        print('TruePositive must be int!')
+# Bài 1. Tạo hàm evaluate_classification_model
+
+
+def evaluate_classification_model(true_positive, false_positive, false_negative):
+    if not isinstance(true_positive, int):
+        print('true_positive must be int!')
         return None
 
-    if not isinstance(FalsePositive, int):
-        print('TruePositive must be int!')
+    if not isinstance(false_positive, int):
+        print('false_positive must be int!')
         return None
 
-    if not isinstance(FalseNegative, int):
-        print('TruePositive must be int!')
+    if not isinstance(false_negative, int):
+        print('false_negative must be int!')
         return None
 
-    if TruePositive < 0 or FalsePositive <0  or FalseNegative < 0:
-        print('Error:TruePositive and FalsePositive and FalseNegative must be greater than zero')
+    if true_positive < 0 or false_positive < 0 or false_negative < 0:
+        print('Error:true_positive and false_positive and false_negative must be greater than zero')
 
     try:
-        precision = TruePositive / (TruePositive + FalsePositive)
-        recall = TruePositive / (TruePositive + FalseNegative)
+        precision = true_positive / (true_positive + false_positive)
+        recall = true_positive / (true_positive + false_negative)
         f1_score = 2 * (precision * recall) / (precision + recall)
     except ZeroDivisionError as e:
         print(f'Error in calculation: {e}')
@@ -30,13 +34,16 @@ def evaluate_classification_model(TruePositive, FalsePositive, FalseNegative):
     print(f'precision is {precision}')
     print(f'f1 score is {f1_score}')
 
-#Bài 2. 3 Tạo hàm Activate function
-import math
+
+# Bài 2. 3 Tạo hàm Activate function
+
+
 def validate_activate_function_name(fname):
     if fname.str.lower().strip() == 'sigmoid' or fname.str.lower().strip() == 'relu' or fname.str.lower().strip() == 'elu':
         return True
     else:
         return False
+
 
 def is_number(n):
     try:
@@ -46,15 +53,17 @@ def is_number(n):
     else:
         return True
 
+
 def calculate_activate_function():
     alpha = 0.01
     number = input('Please input x to calculate: ')
     if not is_number(number):
         print(f'{number} must be an integer, please try again!')
         return
-    float(number)
+    number = float(number)
 
-    activation_function = input('Input Activation Function (sigmoid|relu|elu): ')
+    activation_function = input(
+        'Input Activation Function (sigmoid|relu|elu): ')
     if not validate_activate_function_name(activation_function):
         print(f'{activation_function} is not supported')
         return
@@ -74,8 +83,10 @@ def calculate_activate_function():
 
     print(f'{activation_function}: f({number}): {result}')
 
-#--------Bài 3. Tạo hàm regression loss function--------
-import random
+
+# --------Bài 3. Tạo hàm regression loss function--------
+
+
 def regression_loss_function():
     num_sample = input('Please input number of generated samples: ')
     try:
@@ -84,7 +95,7 @@ def regression_loss_function():
         print('Number must be an integer.')
 
     loss_name = input('Please input loss name (MAE|MSE): ')
-    if not loss_name.lower().strip() == 'MAE' or loss_name.lower().strip() == 'MSE':
+    if loss_name.lower().strip() != 'MAE' or loss_name.lower().strip() == 'MSE':
         print('Wrong loss name')
         return
 
@@ -93,35 +104,38 @@ def regression_loss_function():
         formatted_pred = "{:.15f}".format(pred)
         target = random.uniform(1, 10)
         formatted_target = "{:.15f}".format(target)
-        loss_sum_MAE = 0
-        loss_sum_MSE = 0
+        loss_summae = 0
+        loss_summse = 0
         if loss_name == 'MAE':
             loss_ith = abs(target - pred)
-            loss_sum_MAE = loss_sum_MAE + loss_ith
-            print(f'loss name: {loss_name}, sample: {sample_ith}, pred: {formatted_pred}, target: {formatted_target}, loss: {loss_ith}')
+            loss_summae = loss_summae + loss_ith
+            print(f'loss name: {loss_name}, sample: {sample_ith}, pred: {
+                  formatted_pred}, target: {formatted_target}, loss: {loss_ith}')
 
         if loss_name == 'MSE':
             loss_ith = (target - pred)**2
-            loss_sum_MSE = loss_sum_MSE + loss_ith
-            print(f'loss name: {loss_name}, sample: {sample_ith}, pred: {formatted_pred}, target: {formatted_target}, loss: {loss_ith}')
+            loss_summse = loss_summse + loss_ith
+            print(f'loss name: {loss_name}, sample: {sample_ith}, pred: {
+                  formatted_pred}, target: {formatted_target}, loss: {loss_ith}')
 
     if loss_name == 'MAE':
-        final_loss_MAE = loss_sum_MAE/num_sample
-        print(f'final MAE: {final_loss_MAE}')
+        final_lossmae = loss_summae/num_sample
+        print(f'final MAE: {final_lossmae}')
     elif loss_name == 'MSE':
-        final_loss_MSE = loss_sum_MSE/num_sample
-        print(f'final MSE: {final_loss_MSE}')
+        final_lossmse = loss_summse/num_sample
+        print(f'final MSE: {final_lossmse}')
 
 
-#--------- Bài 4. Ước lượng các hàm số---------
+# --------- Bài 4. Ước lượng các hàm số---------
 def factorial(number):
     if number == 0 or number == 1:
         return 0
     else:
         result = 1
-        for i in range(2, number +1):
+        for i in range(2, number + 1):
             result = result*i
         return result
+
 
 def approx_sin(x, n):
     sin_x = 0
@@ -130,12 +144,14 @@ def approx_sin(x, n):
         sin_x += term
     return sin_x
 
+
 def approx_cos(x, n):
     cos_x = 0
     for i in range(n):
         temp = ((-1) ** i) * (x ** (2 * i)) / factorial(2 * i)
         cos_x = cos_x + temp
     return cos_x
+
 
 def approx_sinh(x, n):
     sinh_x = 0
@@ -144,15 +160,18 @@ def approx_sinh(x, n):
         sinh_x = sinh_x + term
     return sinh_x
 
+
 def approx_cosh(x, n):
     cosh_x = 0
     for i in range(n):
         term = (x ** (2 * i)) / factorial(2 * i)
-        cosh_x = cosh_x+ term
+        cosh_x = cosh_x + term
     return cosh_x
 
-#----- bài 5. Mean Difference of single Root Error
-def Mean_Difference_single_RootError(y, y_hat, n, p):
+# ----- bài 5. Mean Difference of single Root Error
+
+
+def mean_difference_single_root_error(y, y_hat, n, p):
     y_root = y ** (1 / n)
     y_hat_root = y_hat ** (1 / n)
     difference = y_root - y_hat_root
